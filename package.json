@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:client": "esbuild index.tsx --bundle --outfile=dist/client.js",
+    "test:client": "esbuild index.tsx --bundle --outfile=dist/client.js",
     "dev:server": "esbuild server.tsx --bundle --outfile=dist/server.js --platform=node",
 		"dev:tsc": "tsc",
 		"dev": "run-p dev:* && node dist/server.js",
