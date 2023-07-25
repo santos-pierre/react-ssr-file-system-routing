@@ -785,7 +785,7 @@
             }
             return children;
           }
-          function createContext2(defaultValue) {
+          function createContext(defaultValue) {
             var context = {
               $$typeof: REACT_CONTEXT_TYPE,
               // As a workaround to support multiple concurrent renderers, we categorize
@@ -1071,7 +1071,7 @@
             }
             return dispatcher;
           }
-          function useContext3(Context) {
+          function useContext(Context) {
             var dispatcher = resolveDispatcher();
             {
               if (Context._context !== void 0) {
@@ -1085,7 +1085,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState4(initialState) {
+          function useState(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1097,7 +1097,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect4(create, deps) {
+          function useEffect(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1865,7 +1865,7 @@
           exports.Suspense = REACT_SUSPENSE_TYPE;
           exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals;
           exports.cloneElement = cloneElement$1;
-          exports.createContext = createContext2;
+          exports.createContext = createContext;
           exports.createElement = createElement$1;
           exports.createFactory = createFactory;
           exports.createRef = createRef;
@@ -1876,10 +1876,10 @@
           exports.startTransition = startTransition;
           exports.unstable_act = act;
           exports.useCallback = useCallback;
-          exports.useContext = useContext3;
+          exports.useContext = useContext;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect4;
+          exports.useEffect = useEffect;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
@@ -1887,7 +1887,7 @@
           exports.useMemo = useMemo;
           exports.useReducer = useReducer;
           exports.useRef = useRef;
-          exports.useState = useState4;
+          exports.useState = useState;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -2383,9 +2383,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React8 = require_react();
+          var React3 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React8.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React3.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3990,7 +3990,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React8.Children.forEach(props.children, function(child) {
+                  React3.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -12437,7 +12437,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React8.Component().refs;
+          var emptyRefsObject = new React3.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23509,106 +23509,19 @@
   });
 
   // index.tsx
-  var import_react7 = __toESM(require_react());
+  var import_react2 = __toESM(require_react());
   var import_client = __toESM(require_client());
 
   // app.tsx
-  var import_react6 = __toESM(require_react());
-
-  // routers/Router.tsx
   var import_react = __toESM(require_react());
-  var RouterContext = (0, import_react.createContext)({
-    path: "",
-    pushState: (path) => {
-    },
-    replaceState: (path) => {
-    }
-  });
-  var Router = ({ children }) => {
-    const [path, setPath] = (0, import_react.useState)(window.location.pathname);
-    const pushState = (path2) => {
-      window.history.pushState({}, "", path2);
-      setPath(path2);
-    };
-    const replaceState = (path2) => {
-      window.history.replaceState({}, "", path2);
-      setPath(path2);
-    };
-    (0, import_react.useEffect)(() => {
-      window.addEventListener("popstate", () => {
-        setPath(window.location.pathname);
-      });
-    }, []);
-    return /* @__PURE__ */ import_react.default.createElement(RouterContext.Provider, { value: { path, pushState, replaceState } }, children);
-  };
-
-  // routers/Route.tsx
-  var import_react2 = __toESM(require_react());
-  var Route = ({ path, children }) => {
-    const { path: currentPath } = (0, import_react2.useContext)(RouterContext);
-    if (currentPath.split("?")[0] === path.split("?")[0]) {
-      return /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, children);
-    }
-    return null;
-  };
-
-  // pages/posts.tsx
-  var import_react4 = __toESM(require_react());
-
-  // routers/Link.tsx
-  var import_react3 = __toESM(require_react());
-  var Link = ({ to, children }) => {
-    const { pushState } = (0, import_react3.useContext)(RouterContext);
-    const handleClik = (e) => {
-      e.preventDefault();
-      pushState(to);
-    };
-    return /* @__PURE__ */ import_react3.default.createElement("a", { href: to, onClick: handleClik }, children);
-  };
-
-  // pages/posts.tsx
-  var Posts = () => {
-    const [posts, setPosts] = (0, import_react4.useState)([]);
-    (0, import_react4.useEffect)(() => {
-      fetch("https://jsonplaceholder.typicode.com/posts?_limit=10").then((response) => response.json()).then((data) => {
-        setPosts(data);
-      });
-    }, []);
-    return /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("h1", null, "Awesome Blog"), /* @__PURE__ */ import_react4.default.createElement("ul", null, posts.map((post) => /* @__PURE__ */ import_react4.default.createElement("li", { key: post.id }, /* @__PURE__ */ import_react4.default.createElement(Link, { to: `/post?id=${post.id}` }, post.title)))));
-  };
-
-  // pages/post.tsx
-  var import_react5 = __toESM(require_react());
-  var Post = () => {
-    const [loading, setLoading] = (0, import_react5.useState)(true);
-    const [post, setPost] = (0, import_react5.useState)();
-    (0, import_react5.useEffect)(() => {
-      const params = new URLSearchParams(window.location.search);
-      const postID = params.get("id");
-      fetch(`https://jsonplaceholder.typicode.com/posts/${postID}`).then((response) => response.json()).then((data) => {
-        setPost(data);
-      }).finally(() => {
-        setLoading(false);
-      });
-    });
-    if (loading) {
-      return /* @__PURE__ */ import_react5.default.createElement("div", null, "...Loading");
-    }
-    if (!post) {
-      return /* @__PURE__ */ import_react5.default.createElement("div", null, "Something went wrong");
-    }
-    return /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement(Link, { to: "/" }, "Back"), /* @__PURE__ */ import_react5.default.createElement("h1", null, post.title), /* @__PURE__ */ import_react5.default.createElement("p", null, post.body));
-  };
-
-  // app.tsx
-  var App = () => {
-    return /* @__PURE__ */ import_react6.default.createElement(Router, null, /* @__PURE__ */ import_react6.default.createElement(Route, { path: "/" }, /* @__PURE__ */ import_react6.default.createElement(Posts, null)), /* @__PURE__ */ import_react6.default.createElement(Route, { path: "/post" }, /* @__PURE__ */ import_react6.default.createElement(Post, null)));
+  var App = ({ initialPath }) => {
+    return /* @__PURE__ */ import_react.default.createElement("h1", null, "Hey");
   };
 
   // index.tsx
   var root = document.getElementById("root");
   if (root) {
-    (0, import_client.createRoot)(root).render(/* @__PURE__ */ import_react7.default.createElement(App, null));
+    (0, import_client.createRoot)(root).render(/* @__PURE__ */ import_react2.default.createElement(App, { initialPath: window.location.pathname }));
   }
 })();
 /*! Bundled license information:

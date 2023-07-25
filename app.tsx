@@ -1,16 +1,9 @@
 import React from "react";
 import { Router } from "./routers/Router";
 import { Route } from "./routers/Route";
-import { Posts } from "./pages/posts";
-import { Post } from "./pages/post";
+import Posts from "./pages";
+import Post from "./pages/posts";
 
-export const App = () => {
-	return <Router>
-		<Route path="/">
-			<Posts />
-		</Route>
-		<Route path="/post">
-			<Post />
-		</Route>
-	</Router>
+export const App = ({initialPath} : {initialPath: string}) => {
+	return <h1>Hey</h1>
 }

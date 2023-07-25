@@ -6,5 +6,5 @@ import { App } from "./app";
 const root = document.getElementById('root');
 
 if (root) {
-	createRoot(root).render(<App />);
+	createRoot(root).render(<App initialPath={window.location.pathname} />);
 }

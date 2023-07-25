@@ -1,27 +1,47 @@
 import React, { useEffect, useState } from "react";
+import { Post, Post as PostType } from "../types/post";
 import { Link } from "../routers/Link";
-import { Post } from "../types/post";
 
-export const Posts = () => {
-	const [posts, setPosts] = useState<Post[]>([]);
+type PostProps = {
+	initialPost: Post | null;
+}
+
+ const Post = ({ initialPost = null }: PostProps) => {
+	const [loading, setLoading] = useState<boolean>(true);
+	const [post, setPost] = useState<PostType|null>(initialPost);
 
 	useEffect(() => {
-		fetch('https://jsonplaceholder.typicode.com/posts?_limit=10')
-			.then((response) => response.json())
-			.then((data) => {
-				setPosts(data);
-			})
+		const params = new URLSearchParams(window.location.search);
+		const postID = params.get('id');
+
+		if (postID) {
+			loadPost(postID).then(setPost);
+		}
 	}, []);
 
+	if (!post) {
+		return <div>Something went wrong</div>;
+	}
 
 	return <div>
-		<h1>Awesome Blog</h1>
-		<ul>
-			{posts.map((post) => (
-				<li key={post.id}>
-					<Link to={`/post?id=${post.id}`}>{post.title}</Link>
-				</li>
-			))}
-		</ul>
+		<Link to="/">Back</Link>
+		<h1>{post.title}</h1>
+		<p>{post.body}</p>
 	</div>
 }
+
+export const loadPost = async (postID: string) => {
+	return fetch(`https://jsonplaceholder.typicode.com/posts/${postID}`)
+			.then((response) => response.json())
+			.then((data) => {
+				return data
+			})
+}
+
+export const getSSP = async ({query} :any) => {
+	return {
+		initialPost: await loadPost(query.id),
+	}
+}
+
+export default Post;
